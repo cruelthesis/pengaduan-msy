@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengaduan;
+use App\Models\Tanggapan;
+use Illuminate\Http\Request;
 use App\Http\Requests\StorePengaduanRequest;
 use App\Http\Requests\UpdatePengaduanRequest;
-use Illuminate\Http\Request;
 
 class PengaduanController extends Controller
 {
@@ -16,7 +17,10 @@ class PengaduanController extends Controller
      */
     public function index()
     {
-        // return view('client.part.pengaduan');
+        $masyarakat = session()->get('id');
+
+        $pengaduan = Pengaduan::where('nik', $masyarakat->nik)->get();
+        return view('client.part.historipengaduan', compact('pengaduan'));
     }
 
     /**
@@ -40,8 +44,9 @@ class PengaduanController extends Controller
         $nik = session()->get('id');
 
         $data = $request->validate([
-            'foto' => 'required|max:2048',
-            'isi_laporan' => 'required'
+            'foto' => 'required',
+            'isi_laporan' => 'required',
+            'judul' => 'required'
         ]);
 
         $gambar = $request->file('foto')->getClientOriginalName();
@@ -50,13 +55,16 @@ class PengaduanController extends Controller
         $pengaduan = [
             'nik' => $nik['nik'],
             'tgl_pengaduan' => now(),
+            'judul' => $data['judul'],
             'isi_laporan' => $data['isi_laporan'],
             'foto' => $gambar,
             'status' => '0'
         ];
 
+        // dd($pengaduan);
+
         Pengaduan::create($pengaduan);
-        return redirect ('/');
+        return redirect ('historipengaduan/masyarakat');
     }
 
     /**
@@ -65,9 +73,19 @@ class PengaduanController extends Controller
      * @param  \App\Models\Pengaduan  $pengaduan
      * @return \Illuminate\Http\Response
      */
-    public function show(Pengaduan $pengaduan)
+    public function show($id)
     {
-        //
+        // $detailpengaduan = Pengaduan::all();
+        $detail = Pengaduan::with([
+            'detail', 'masyarakat'
+        ])->findOrFail($id);
+
+        $tanggapan = Tanggapan::where('id_pengaduan', $id)->first();
+        
+
+        // dd($detail);
+
+        return view('client.part.detailpengaduan', compact('detail', 'tanggapan'));
     }
 
     /**

@@ -132,7 +132,7 @@ class MasyarakatController extends Controller
             'isverif' => 0,
         ]);
 
-        return redirect('/');
+        return redirect('/login/masyarakat');
     }
 
     public function logout(){

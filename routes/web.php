@@ -27,13 +27,14 @@ Route::post('postregis/masyarakat', [MasyarakatController::class, 'postregis']);
 Route::post('postlogin/masyarakat', [MasyarakatController::class, 'postlogin']);
 Route::get('logout/masyarakat', [MasyarakatController::class, 'logout']);
 
+Route::get('lapor/masyarakat', [MasyarakatController::class, 'pengaduan']);
+Route::post('kirimpengaduan/masyarakat', [PengaduanController::class,'store']);
+Route::get('historipengaduan/masyarakat', [PengaduanController::class, 'index']);
+Route::get('detailpengaduan/masyarakat/{id}', [PengaduanController::class, 'show']);
 
+Route::get('dashboard/petugas', [PetugasController::class, 'index']);
 Route::get('login/petugas', [PetugasController::class, 'pagelogin']);
 Route::get('regispetugas', [PetugasController::class, 'listpetugas']);
 
-Route::get('dashboard/petugas', [PetugasController::class, 'index']);
 
-Route::get('lapor/masyarakat', [MasyarakatController::class, 'pengaduan']);
-
-Route::post('kirimpengaduan/masyarakat', [PengaduanController::class,'store']);
 

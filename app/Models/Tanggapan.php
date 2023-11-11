@@ -12,4 +12,8 @@ class Tanggapan extends Model
     protected $fillable = [
         'id_petugas','id_pengaduan','tgl_tanggapan', 'tanggapan'
     ];
+
+    public function pengaduan(){
+        return $this->hasOne(Pengaduan::class, 'id', 'id');
+    }
 }

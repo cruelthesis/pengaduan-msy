@@ -21,6 +21,12 @@
         @csrf
         <div class="card-body">
             <div class="row">
+
+            <div class="mb-3">
+              <label class="form-label">Judul Laporan</label>
+              <input type="text" class="form-control" name="judul" placeholder="Tulis judul laporan" />
+            </div>
+
                 <div class="mb-3">
                     <div class="form-label">Foto</div>
                     <input name="foto" type="file" class="form-control" />

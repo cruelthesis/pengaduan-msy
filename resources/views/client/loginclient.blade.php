@@ -25,6 +25,13 @@
               <h2 class="h2 text-center mb-4">Masuk ke Akun</h2>
               <form action="{{ url('postlogin/masyarakat') }}" method="post">
                 @csrf
+
+                @if (Session::has('pesan'))
+                  <div class="alert">
+                    {{ Session::get('pesan') }}
+                  </div>
+                @endif
+
                 <div class="mb-3">
                   <label class="form-label">Alamat Email</label>
                   <input name="email" type="email" class="form-control" placeholder="emailanda@email.com">
